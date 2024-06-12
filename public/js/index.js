@@ -35,7 +35,6 @@ async function search() {
         body: JSON.stringify(packet)
     });
     let data = await response.json();
-    console.log(data);
     // we'll work out what to do with the data later...
 }
 
