@@ -24,7 +24,7 @@
                 <button id="random-button">Random</button>
             </div>
             <div id="search-results">
-                
+
             </div>
         </div>
         <div id="filter-section">
@@ -32,11 +32,12 @@
                 <h1 id="filter-title"><span>Filters</span></h1>
                 <div id="filter-flex-container">
                     <section id="alcoholic-section">
-                        <label class="input-label" for="Alcoholic-type"><input type="radio" name="alcoholic-type" value="Alcoholic">Alcoholic</label>
-                        <label class="input-label" for="alcoholic-type"><input type="radio" name="alcoholic-type" value="Non_alcoholic">Non Alcoholic</label>
-                        <label class="input-label" for="alcoholic-type"><input type="radio" name="alcoholic-type" value="Optional_alcohol">Optional Alcohol</label>
+                        <label class="input-label" for="alcoholic"><input class="alcoholic-input" type="checkbox" name="alcoholic" value="Alcoholic">Alcoholic</label>
+                        <label class="input-label" for="non-alcoholic"><input class="alcoholic-input" type="checkbox" name="non-alcoholic" value="Non_alcoholic">Non Alcoholic</label>
+                        <label class="input-label" for="optional"><input class="alcoholic-input" type="checkbox" name="optional" value="Optional_alcohol">Optional Alcohol</label>
                     </section>
                     <section id="drink-type-section">
+                        <label class="input-label" for="drink-type-switch"><input id="drink-type-switch" type="checkbox" name="drink-type-switch">Drink Type Filter</label>
                         <select id="drink-type-input">
                             <option>Ordinary Drink</option>
                             <option>Cocktail</option>
@@ -52,6 +53,7 @@
                         </select>
                     </section>
                     <section id="cup-type-section">
+                        <label class="input-label" for="cup-type-switch"><input id="cup-type-switch" type="checkbox" name="cup-type-switch">Cup Type Filter</label>
                         <select id="cup-type-input">
                             <option>Highball glass</option>
                             <option>Cocktail glass</option>
