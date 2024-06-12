@@ -8,6 +8,93 @@
     <title>Cocktail Search</title>
 </head>
 <body>
-    <h1>T#EST</h1>
+    <div id="main-flex-container">
+        <div id="search-section">
+            <div id="search-tools">
+                <select id="search-type-input">
+                    <option value="cocktail">Cocktail</option>
+                    <option value="ingredient">Ingredient</option>
+                </select>
+                <div id="input-bar">
+                    <input id="search-input" type="text" placeholder="Long Island">
+                    <div id="search-button-container">
+                        <img id="search-button" src="images/search-icon.png">
+                    </div>
+                </div>
+                <button id="random-button">Random</button>
+            </div>
+            <div id="search-results">
+                
+            </div>
+        </div>
+        <div id="filter-section">
+            <div id="filters">
+                <h1 id="filter-title"><span>Filters</span></h1>
+                <div id="filter-flex-container">
+                    <section id="alcoholic-section">
+                        <label class="input-label" for="Alcoholic-type"><input type="radio" name="alcoholic-type" value="Alcoholic">Alcoholic</label>
+                        <label class="input-label" for="alcoholic-type"><input type="radio" name="alcoholic-type" value="Non_alcoholic">Non Alcoholic</label>
+                        <label class="input-label" for="alcoholic-type"><input type="radio" name="alcoholic-type" value="Optional_alcohol">Optional Alcohol</label>
+                    </section>
+                    <section id="drink-type-section">
+                        <select id="drink-type-input">
+                            <option>Ordinary Drink</option>
+                            <option>Cocktail</option>
+                            <option>Shake</option>
+                            <option>Other / Unknown</option>
+                            <option>Cocoa</option>
+                            <option>Shot</option>
+                            <option>Coffee / Tea</option>
+                            <option>Homemade Liqueur</option>
+                            <option>Punch / Party Drink</option>
+                            <option>Beer</option>
+                            <option>Soft Drink</option>
+                        </select>
+                    </section>
+                    <section id="cup-type-section">
+                        <select id="cup-type-input">
+                            <option>Highball glass</option>
+                            <option>Cocktail glass</option>
+                            <option>Old-fashioned glass</option>
+                            <option>Whiskey Glass</option>
+                            <option>Collins glass</option>
+                            <option>Pousse cafe glass</option>
+                            <option>Champagne flute</option>
+                            <option>Whiskey sour glass</option>
+                            <option>Cordial glass</option>
+                            <option>Brandy snifter</option>
+                            <option>White wine glass</option>
+                            <option>Nick and Nora Glass</option>
+                            <option>Hurricane glass</option>
+                            <option>Coffee mug</option>
+                            <option>Shot glass</option>
+                            <option>Jar</option>
+                            <option>Irish coffee cup</option>
+                            <option>Punch bowl</option>
+                            <option>Pitcher</option>
+                            <option>Pint glass</option>
+                            <option>Copper Mug</option>
+                            <option>Wine Glass</option>
+                            <option>Beer mug</option>
+                            <option>Margarita/Coupette glass</option>
+                            <option>Beer pilsner</option>
+                            <option>Beer Glass</option>
+                            <option>Parfait glass</option>
+                            <option>Mason jar</option>
+                            <option>Margarita glass</option>
+                            <option>Martini Glass</option>
+                            <option>Balloon Glass</option>
+                            <option>Coupe Glass</option>
+                        </select>
+                    </section>
+                </div>
+                
+            </div>
+            <div id="item-preview">
+                <img id="imem-preview-image" alt="">
+                <p id="item-preview-desc"></p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

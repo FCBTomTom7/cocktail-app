@@ -1,3 +1,124 @@
-h1 {
-    color: red;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+#main-flex-container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: row;
+}
+
+#search-section {
+    width: 80%;
+}
+
+#filter-section {
+    width: 20%;
+    border-left: 1px solid black;
+}
+
+#search-button {
+    height: 100%;
+    aspect-ratio: 1 / 1;
+}
+
+
+#search-tools {
+    width: 100%;
+    height: 10%;
+    position: relative;
+    border-bottom: 1px solid black;
+}
+
+#search-input {
+    outline: none;
+    border: none;
+    width: 90%;
+}
+
+#input-bar {
+    width: 35%;
+    position: absolute;
+    left: 32.5%;
+    height: 20%;
+    top: 40%;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid black;    
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
+#search-button-container {
+    height: 100%;
+    width: 10%;
+    padding: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#search-button-container:hover {
+    background: rgb(225, 225, 225);
+}
+
+#search-type-input {
+    width: 10%;
+    height: 20%;
+    position: absolute;
+    left: 20%; /* 2.5% space between */
+    top: 40%;
+    }
+
+#random-button {
+    width: 10%;
+    height: 20%;
+    position: absolute;
+    left: 70%;
+    top: 40%;
+    outline: none;
+    border: 1px solid black;
+    border-radius: 2px;
+}
+
+#filters {
+    height: 33%;
+    border-bottom: 1px solid black;
+}
+
+#filter-flex-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 69.7%;
+    padding: 2% 0;
+    padding-left: 5%;
+}
+
+#item-preview {
+    height: 67%;
+}
+
+#filter-title {
+    height: 30.3%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: normal;
+}
+
+.input-label {
+    display: block;
+    margin-bottom: 2%;
+}
+
+select {
+    outline: none;
+    border: 1px solid black;
+    border-radius: 2px;
+    padding-left: 2px;
 }
