@@ -12,6 +12,12 @@ app.get('/', async (req, res) => {
     res.sendFile(process.cwd() + "/views/index.html");
 })
 
+app.post('/api', async (req, res) => {
+    let packet = req.body;
+    console.log(packet);
+    res.json(packet);
+})
+
 http.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
 })

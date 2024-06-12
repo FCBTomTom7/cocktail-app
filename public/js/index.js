@@ -27,9 +27,16 @@ async function search() {
         search: searchText,
         filters: getFilterData()
     }
-
-    let response = await fetch(url + '/api');
-    
+    let response = await fetch(url + '/api', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(packet)
+    });
+    let data = await response.json();
+    console.log(data);
+    // we'll work out what to do with the data later...
 }
 
 function getFilterData() {
