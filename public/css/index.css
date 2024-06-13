@@ -113,6 +113,7 @@
 
 #item-preview {
     height: 67%;
+    text-align: center;
 }
 
 #filter-title {
@@ -184,4 +185,23 @@ select {
 
 .search-result-thumbnail {
     width: 100%;
+}
+
+#instructions-title {
+    visibility: hidden;
+    margin: 2% 0;
+}
+
+#instructions-list {
+    list-style: decimal;
+    padding-left: 15%;
+    text-align: left;
+}
+
+#preview-name {
+    margin: 2% 0;
+}
+
+.preview-instruction {
+    margin-bottom: 2%;
 }
