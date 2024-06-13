@@ -16,11 +16,12 @@ app.post('/api', async (req, res) => {
     console.log(packet);
     let searchResponse;
     let filteredResults;
+    let resultArray = [];
     if(packet.type === 'cocktail') {
         searchResponse = await fetch(apiUrl + "search.php?s=" + packet.search);
         let unfilteredResults = await searchResponse.json();
         // filter unfilteredResults
-        filteredResults = unfilteredResults ? unfilteredResults.drinks.filter(drink => {
+        filteredResults = unfilteredResults.drinks !== null ? unfilteredResults.drinks.filter(drink => {
             // drink type is category
             // cup type is glass    
             let alcoholicFilterPass = false;
@@ -39,15 +40,37 @@ app.post('/api', async (req, res) => {
 
             return alcoholicFilterPass && categoryFilterPass && glassFilterPass;
         }) : null;
+        if(filteredResults !== null) {
+            for(drink of filteredResults) {
+                let ingredients = [];
+                let measurements = [];
+                for(let i = 0; i < 15; i++) {
+                    if(drink['strIngredient' + (i + 1)] == null) break;
+                    ingredients.push(drink['strIngredient' + (i + 1)]);
+                    measurements.push(drink['strMeasure' + (i + 1)]);
+                }
+                resultArray.push({
+                    name: drink.strDrink,
+                    drinkType: drink.strCategory,
+                    cupType: drink.strGlass,
+                    instructions: drink.strInstructions,
+                    thumbnail: drink.strDrinkThumb,
+                    ingredients,
+                    measurements,
+                    alcoholic: drink.strAlcoholic
+                })
+            }
+        }
     } else {
         console.log('IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII');
         searchResponse = await fetch(apiUrl + "search.php?i=" + packet.search);
         filteredResults = await searchResponse.json();
+        resultArray = filteredResults;
     }
     
 
-    console.log(filteredResults);
-    res.json(packet);
+    //console.log(filteredResults);
+    res.json(resultArray);
 })
 
 http.listen(PORT, () => {
