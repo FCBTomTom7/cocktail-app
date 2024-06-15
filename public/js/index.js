@@ -47,7 +47,8 @@ async function search() {
 
     if(packet.type === 'cocktail') {
         for(drink of data) {
-            let mainDiv = document.createElement('div');
+            let mainDiv = document.createElement('a');
+            mainDiv.href = '/cocktails/' + drink.name;
             mainDiv.className = 'search-result-wrapper';
             mainDiv.setAttribute('data-drink', JSON.stringify(drink));
             let resultThumb = document.createElement('img');

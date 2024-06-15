@@ -152,11 +152,14 @@ select {
 }
 
 .search-result-wrapper {
+    text-decoration: none;
+    color: black;
     width: 18%;
     height: 40%;
     border: 1px solid grey;
     margin-right: 2.5%;
     margin-bottom: 2.5%;
+
 }
 
 .search-result-wrapper:hover {

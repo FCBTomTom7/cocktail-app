@@ -13,7 +13,6 @@ app.get('/', async (req, res) => {
 })
 app.post('/api', async (req, res) => {
     let packet = req.body;
-    console.log(packet);
     let searchResponse;
     let filteredResults;
     let resultArray = [];
@@ -71,6 +70,38 @@ app.post('/api', async (req, res) => {
 
     //console.log(filteredResults);
     res.json(resultArray);
+})
+
+app.get('/cocktails/:cocktail', async (req, res) => {
+    res.sendFile(process.cwd() + '/views/cocktail.html');
+})
+
+app.get('/api/:cocktail', async (req, res) => {
+    let cocktail = req.params.cocktail;
+    let response = await fetch(apiUrl + 'search.php?s=' + cocktail);
+    let data = await response.json();
+    if(data.drinks) {
+        let drink = data.drinks[0];
+        let ingredients = [];
+        let measurements = [];
+        for(let i = 0; i < 15; i++) {
+            if(drink['strIngredient' + (i + 1)] == null) break;
+            ingredients.push(drink['strIngredient' + (i + 1)]);
+            measurements.push(drink['strMeasure' + (i + 1)]);
+        }
+        res.json({
+            success: true,
+            name: drink.strDrink,
+            img: drink.strDrinkThumb,
+            instructions: drink.strInstructions,
+            ingredients,
+            measurements
+        })
+    } else {
+        res.json({
+            success: false
+        })
+    }
 })
 
 http.listen(PORT, () => {
