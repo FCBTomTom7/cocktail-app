@@ -2,6 +2,15 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: 'Nunito', sans-serif;
+}
+
+p {
+    font-size: 16px;
+}
+
+h2 {
+    font-size: 20px;
 }
 
 #main-flex-container {
@@ -9,6 +18,8 @@
     width: 100vw;
     height: 100vh;
     flex-direction: row;
+    background: rgb(49, 49, 49);
+    color: rgb(180, 187, 215); 
 }
 
 #search-section {
@@ -40,7 +51,7 @@
     left:0;
     border-bottom: 1px solid black;
     z-index: 4;
-    background: rgb(91, 91, 78);
+    background: rgb(49, 49, 49);
     box-shadow: 0 1px 1px 0px rgb(164, 164, 164);
 }
 
@@ -61,6 +72,7 @@
     border: 1px solid black;    
     padding: 0 2px;
     border-radius: 2px;
+    background: #191b19;
 }
 
 #search-button-container {
@@ -73,7 +85,7 @@
 }
 
 #search-button-container:hover {
-    background: rgb(225, 225, 225);
+    background: black;
 }
 
 #search-type-input {
@@ -98,8 +110,9 @@
 #filters {
     height: 33%;
     border-bottom: 1px solid black;
-    background: #2b3434;
+    background: rgb(59, 59, 49);
     box-shadow: 0 1px 1px 0px rgb(164, 164, 164);
+    color: rgb(188, 188, 190);
 }
 
 #filter-flex-container {
@@ -114,6 +127,7 @@
 #item-preview {
     height: 67%;
     text-align: center;
+    background: rgb(49, 49, 49);
 }
 
 #filter-title {
@@ -135,6 +149,12 @@ select {
     border: 1px solid black;
     border-radius: 2px;
     padding-left: 2px;
+    
+}
+
+input, button, select {
+    background: #191b19;
+    color: rgb(180, 187, 215);
 }
 
 #search-results {
@@ -155,10 +175,10 @@ select {
 
 .search-result-wrapper {
     text-decoration: none;
-    color: black;
+    color: rgb(188, 188, 190);
     width: 18%;
     height: 40%;
-    border: 1px solid grey;
+    border: 1px solid rgb(188, 188, 190);
     margin-right: 2.5%;
     margin-bottom: 2.5%;
 
@@ -189,7 +209,18 @@ select {
 }
 
 .search-result-thumbnail {
+    /* width: 100%; */
+    max-width: 100%;
+    max-height: 50%;
+}
+
+.descriptor-container {
+    height:30%;
     width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 }
 
 #instructions-title {

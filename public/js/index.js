@@ -102,11 +102,17 @@ async function search() {
             let resultAlcoholic = document.createElement('p');
             resultAlcoholic.innerHTML = drink.alcoholic;
             resultAlcoholic.className = 'search-result-alcoholic';
+            let descriptorContainer = document.createElement('div');
+            descriptorContainer.className = 'descriptor-container';
+            descriptorContainer.appendChild(resultDrinkType);
+            descriptorContainer.appendChild(resultCupType);
+            descriptorContainer.appendChild(resultAlcoholic);
             mainDiv.appendChild(resultThumb);
             mainDiv.appendChild(resultName);
-            mainDiv.appendChild(resultDrinkType);
-            mainDiv.appendChild(resultCupType);
-            mainDiv.appendChild(resultAlcoholic);
+            mainDiv.append(descriptorContainer);
+            // mainDiv.appendChild(resultDrinkType);
+            // mainDiv.appendChild(resultCupType);
+            // mainDiv.appendChild(resultAlcoholic);
             searchResults.appendChild(mainDiv);
             mainDiv.addEventListener('mouseover', () => {
                 //console.log(mainDiv.getAttribute('data-drink'));
