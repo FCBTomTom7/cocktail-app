@@ -40,7 +40,7 @@
     left:0;
     border-bottom: 1px solid black;
     z-index: 4;
-    background: rgb(239, 239, 227);
+    background: rgb(91, 91, 78);
     box-shadow: 0 1px 1px 0px rgb(164, 164, 164);
 }
 
@@ -98,7 +98,7 @@
 #filters {
     height: 33%;
     border-bottom: 1px solid black;
-    background: #1242434b;
+    background: #2b3434;
     box-shadow: 0 1px 1px 0px rgb(164, 164, 164);
 }
 
@@ -148,7 +148,9 @@ select {
     top: 10%;
     left: 0;
     width: 80%;
+    height: 90%;
     padding: 2%;
+    background: #3e4555;
 }
 
 .search-result-wrapper {
@@ -207,4 +209,18 @@ select {
 
 .preview-instruction {
     margin-bottom: 2%;
+}
+
+#preview-image {
+    width: 75%;
+}
+
+#preview-desc {
+    text-align: left;
+}
+
+#desc-container {
+    overflow: scroll;
+    height: 50%;
+    padding: 5px;
 }

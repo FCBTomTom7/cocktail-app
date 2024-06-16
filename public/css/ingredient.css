@@ -1,0 +1,70 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    margin-bottom: 8px;
+    padding: 0;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+}
+
+#container {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+
+#ingredient-name {
+    margin-bottom: 10px;
+}
+
+h2, p, ul {
+    width: 50%;
+    margin: auto;
+    text-align: left;
+}
+
+#alcoholic, #abv {
+    display: inline;
+}
+
+p {
+    font-weight: normal;
+}
+
+#ingredient-img {
+    height: 30%;
+    margin-bottom: 10px;
+}
+
+#alcoholic-title, #abv-title, #desc-title {
+    margin-bottom: 10px;
+}
+
+#back-button {
+    position: fixed;
+    top: 5%;
+    left: 5%;
+    background: #cdcdcd;
+    display: flex;
+    justify-content: center;
+    width: 10%;
+    height: 3%;
+    text-decoration: none;
+}
+
+#back-button:hover {
+    background: #bdbdbd;
+}
+
+#back-button-text {
+    width: 100%;
+    text-align: center;
+    color: black;
+}
+
+#abv-title, #alcoholic-title {
+    visibility: hidden;
+}

@@ -44,7 +44,7 @@ app.post('/api', async (req, res) => {
                 let ingredients = [];
                 let measurements = [];
                 for(let i = 0; i < 15; i++) {
-                    if(drink['strIngredient' + (i + 1)] == null) break;
+                    if(drink['strIngredient' + (i + 1)] == null || drink['strIngredient' + (i + 1)] === '') break;
                     ingredients.push(drink['strIngredient' + (i + 1)]);
                     measurements.push(drink['strMeasure' + (i + 1)]);
                 }
@@ -64,7 +64,16 @@ app.post('/api', async (req, res) => {
         console.log('IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII');
         searchResponse = await fetch(apiUrl + "search.php?i=" + packet.search);
         filteredResults = await searchResponse.json();
-        resultArray = filteredResults;
+        if(filteredResults.ingredients !== null) {
+            filteredResults.ingredients.forEach(ingredient => {
+                resultArray.push({
+                    name: ingredient.strIngredient,
+                    description: ingredient.strDescription,
+                    alcohol: ingredient.strAlcohol === "Yes",
+                    abv: ingredient.strABV
+                })
+            })
+        }
     }
     
 
@@ -85,7 +94,7 @@ app.get('/api/:cocktail', async (req, res) => {
         let ingredients = [];
         let measurements = [];
         for(let i = 0; i < 15; i++) {
-            if(drink['strIngredient' + (i + 1)] == null) break;
+            if(drink['strIngredient' + (i + 1)] == null || drink['strIngredient' + (i + 1)] === '') break;
             ingredients.push(drink['strIngredient' + (i + 1)]);
             measurements.push(drink['strMeasure' + (i + 1)]);
         }
@@ -96,6 +105,30 @@ app.get('/api/:cocktail', async (req, res) => {
             instructions: drink.strInstructions,
             ingredients,
             measurements
+        })
+    } else {
+        res.json({
+            success: false
+        })
+    }
+})
+
+app.get('/ingredients/:ingredient', async (req, res) => {
+    res.sendFile(process.cwd() + '/views/ingredient.html');
+})
+
+app.get('/api/i/:ingredient', async (req, res) => {
+    let ingredient = req.params.ingredient;
+    let response = await fetch(apiUrl + "search.php?i=" + ingredient);
+    let data = await response.json();
+    if(data.ingredients) {
+        let ingredient = data.ingredients[0];
+        res.json({
+            success: true,
+            name: ingredient.strIngredient,
+            description: ingredient.strDescription,
+            alcohol: ingredient.strAlcohol === 'Yes',
+            abv: ingredient.strABV
         })
     } else {
         res.json({

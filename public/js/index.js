@@ -8,11 +8,26 @@ let drinkTypeInput = document.getElementById('drink-type-input');
 let cupTypeSwitch = document.getElementById('cup-type-switch');
 let cupTypeInput = document.getElementById('cup-type-input');
 let searchResults = document.getElementById('search-results');
+let instructionsTitle = document.getElementById('instructions-title');
+
+let filtersContainer = document.getElementById('filters');
+let itemPreviewContainer = document.getElementById('item-preview');
 
 let previewName = document.getElementById('preview-name');
 let previewImage = document.getElementById('preview-image');
 let previewInstructions = document.getElementById('instructions-list');
+let previewAlcoholic = document.getElementById('preview-alcoholic');
+let previewAbv = document.getElementById('preview-abv');
+let previewDesc = document.getElementById('preview-desc');
+let descContainer = document.getElementById('desc-container');
 const url = "http://localhost:3000";
+const ingredientThumb = "https://www.thecocktaildb.com/images/ingredients/";
+
+if(searchType.value === 'cocktail') {
+    showFilters();
+} else {
+    hideFilters();
+}
 
 searchInput.addEventListener('keypress', e => {
     if(e.key === 'Enter') {
@@ -20,6 +35,27 @@ searchInput.addEventListener('keypress', e => {
         search();
     }
 })
+
+searchType.addEventListener('change', () => {
+    if(searchType.value === 'cocktail') {
+        showFilters();
+    } else {
+        hideFilters();
+    }
+})
+
+function showFilters() {
+    filtersContainer.style.visibility = 'visible';
+    filtersContainer.style.height = "33%";
+    itemPreviewContainer.style.height = "67%";
+}
+
+function hideFilters() {
+    filtersContainer.style.visibility = 'hidden';
+    filtersContainer.style.height = '0';
+    itemPreviewContainer.style.height = "100%";
+}
+
 
 searchButton.addEventListener('click', () => {
     removeSearchResults();
@@ -81,11 +117,46 @@ async function search() {
         
     } else {
         //////////
+        for(let ingredient of data) {
+            let mainA = document.createElement('a');
+            mainA.className = 'search-result-wrapper';
+            mainA.href = '/ingredients/' + ingredient.name;
+            mainA.setAttribute('data-ingredient', JSON.stringify(ingredient));
+            let thumb = document.createElement('img');
+            thumb.className = 'search-result-thumbnail';
+            thumb.src = ingredientThumb + ingredient.name.toLowerCase() + '-Medium.png';
+            let ingredientName = document.createElement('h2');
+            ingredientName.className = 'search-result-name';
+            ingredientName.innerHTML = ingredient.name;
+            let alcoholType = document.createElement('p');
+            alcoholType.className = 'search-result-drink-type';
+            mainA.appendChild(thumb);
+            mainA.appendChild(ingredientName);
+            mainA.appendChild(alcoholType);
+            if(ingredient.alcohol) {
+                alcoholType.innerHTML = 'Alcoholic';
+                let ABV = document.createElement('p');
+                ABV.className = 'search-result-cup-type';
+                ABV.innerHTML = ingredient.abv + "%";
+                mainA.appendChild(ABV);
+            } else {
+                alcoholType.innerHTML.innerHTML = 'Non-alcoholic';
+            }
+            searchResults.appendChild(mainA);
+            mainA.addEventListener('mouseover', () => {
+                updatePreviewI(JSON.parse(mainA.getAttribute('data-ingredient')));
+            })
+        }
     }
 }
 
 function updatePreview(drink) {
-    document.getElementById('instructions-title').style.visibility = 'visible';
+    instructionsTitle.style.visibility = 'visible';
+    descContainer.style.height = '0';
+    descContainer.style.padding = '0';
+    previewAlcoholic.innerHTML = '';
+    previewAbv.innerHTML = '';
+    previewDesc.innerHTML = '';
     previewName.innerHTML = drink.name;
     previewImage.src = drink.thumbnail + '/preview';
     removeChildElements(previewInstructions);
@@ -95,6 +166,20 @@ function updatePreview(drink) {
         instruction.innerHTML = (drink.measurements[i] !== null ? drink.measurements[i].charAt(0).toUpperCase() + drink.measurements[i].slice(1) + (drink.measurements[i].charAt(drink.measurements[i].length - 1) === ' ' ? '' : ' ') : "") + drink.ingredients[i];
         previewInstructions.appendChild(instruction);
     }
+}
+
+function updatePreviewI(ingredient) {
+    instructionsTitle.style.visibility = 'hidden';
+    descContainer.style.height = '50%';
+    descContainer.style.padding = '5px';
+    previewName.innerHTML = ingredient.name;
+    previewImage.src = ingredientThumb + ingredient.name.toLowerCase() + '-Medium.png';
+    removeChildElements(previewInstructions);
+    previewAlcoholic.innerHTML = ingredient.alcohol ? "Alcoholic" : "Non-alcoholic";
+    if(ingredient.alcohol) {
+        previewAbv.innerHTML = ingredient.abv + "%";
+    }
+    previewDesc.innerHTML = ingredient.description;
 }
 
 function removeChildElements(node) {
