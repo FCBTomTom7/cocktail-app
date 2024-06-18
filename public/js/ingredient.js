@@ -27,7 +27,11 @@ function fillPage(data) {
         alcoholic.innerHTML = data.alcohol ? 'Alcoholic' : 'Non-alcoholic';
         if(data.alcohol) {
             abvTitle.style.visibility = 'visible';
-            abv.innerHTML = data.abv + "%";
+            if(data.abv !== null) {
+                abv.innerHTML = data.abv + "%";
+            } else {
+                abv.innerHTML = "Varies";
+            }
         }
         if(data.description !== null) {
             descTitle.innerHTML = 'Description';

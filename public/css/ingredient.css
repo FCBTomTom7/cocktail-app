@@ -3,6 +3,8 @@
     margin: 0;
     margin-bottom: 8px;
     padding: 0;
+    font-family: 'Roboto Mono', monospace;
+    color-scheme: dark;
 }
 
 body {

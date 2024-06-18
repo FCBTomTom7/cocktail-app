@@ -23,6 +23,10 @@ let descContainer = document.getElementById('desc-container');
 const url = "http://localhost:3000";
 const ingredientThumb = "https://www.thecocktaildb.com/images/ingredients/";
 
+randomButton.addEventListener('click', () => {
+    randomSearch();
+})
+
 if(searchType.value === 'cocktail') {
     showFilters();
 } else {
@@ -78,80 +82,18 @@ async function search() {
         body: JSON.stringify(packet)
     });
     let data = await response.json();
-    console.log(data);
     // we'll work out what to do with the data later...
 
     if(packet.type === 'cocktail') {
         for(drink of data) {
-            let mainDiv = document.createElement('a');
-            mainDiv.href = '/cocktails/' + drink.name;
-            mainDiv.className = 'search-result-wrapper';
-            mainDiv.setAttribute('data-drink', JSON.stringify(drink));
-            let resultThumb = document.createElement('img');
-            resultThumb.src = drink.thumbnail + '/preview';
-            resultThumb.className = 'search-result-thumbnail';
-            let resultName = document.createElement('h2');
-            resultName.innerHTML = drink.name;
-            resultName.className = 'search-result-name';
-            let resultDrinkType = document.createElement('p');
-            resultDrinkType.innerHTML = drink.drinkType;
-            resultDrinkType.className = 'search-result-drink-type';
-            let resultCupType = document.createElement('p');
-            resultCupType.innerHTML = drink.cupType;
-            resultCupType.className = 'search-result-cup-type';
-            let resultAlcoholic = document.createElement('p');
-            resultAlcoholic.innerHTML = drink.alcoholic;
-            resultAlcoholic.className = 'search-result-alcoholic';
-            let descriptorContainer = document.createElement('div');
-            descriptorContainer.className = 'descriptor-container';
-            descriptorContainer.appendChild(resultDrinkType);
-            descriptorContainer.appendChild(resultCupType);
-            descriptorContainer.appendChild(resultAlcoholic);
-            mainDiv.appendChild(resultThumb);
-            mainDiv.appendChild(resultName);
-            mainDiv.append(descriptorContainer);
-            // mainDiv.appendChild(resultDrinkType);
-            // mainDiv.appendChild(resultCupType);
-            // mainDiv.appendChild(resultAlcoholic);
-            searchResults.appendChild(mainDiv);
-            mainDiv.addEventListener('mouseover', () => {
-                //console.log(mainDiv.getAttribute('data-drink'));
-                updatePreview(JSON.parse(mainDiv.getAttribute('data-drink')));
-            })
+            makeCocktailSearchResult(drink);
         }
         
         
     } else {
         //////////
         for(let ingredient of data) {
-            let mainA = document.createElement('a');
-            mainA.className = 'search-result-wrapper';
-            mainA.href = '/ingredients/' + ingredient.name;
-            mainA.setAttribute('data-ingredient', JSON.stringify(ingredient));
-            let thumb = document.createElement('img');
-            thumb.className = 'search-result-thumbnail';
-            thumb.src = ingredientThumb + ingredient.name.toLowerCase() + '-Medium.png';
-            let ingredientName = document.createElement('h2');
-            ingredientName.className = 'search-result-name';
-            ingredientName.innerHTML = ingredient.name;
-            let alcoholType = document.createElement('p');
-            alcoholType.className = 'search-result-drink-type';
-            mainA.appendChild(thumb);
-            mainA.appendChild(ingredientName);
-            mainA.appendChild(alcoholType);
-            if(ingredient.alcohol) {
-                alcoholType.innerHTML = 'Alcoholic';
-                let ABV = document.createElement('p');
-                ABV.className = 'search-result-cup-type';
-                ABV.innerHTML = ingredient.abv + "%";
-                mainA.appendChild(ABV);
-            } else {
-                alcoholType.innerHTML.innerHTML = 'Non-alcoholic';
-            }
-            searchResults.appendChild(mainA);
-            mainA.addEventListener('mouseover', () => {
-                updatePreviewI(JSON.parse(mainA.getAttribute('data-ingredient')));
-            })
+            makeIngredientSearchResult(ingredient);
         }
     }
 }
@@ -201,6 +143,13 @@ function removeSearchResults() {
     }
 }
 
+async function randomSearch() {
+    removeChildElements(searchResults);
+    let response = await fetch(url + '/api/random', {method: "GET"});
+    let drink = await response.json();
+    makeCocktailSearchResult(drink);
+}
+
 function getFilterData() {
     let alcoholicFilterArray = [];
     for(let filter of alcoholicFilters) {
@@ -228,4 +177,81 @@ function getFilterData() {
     }
 
     return filters;
+}
+
+function makeCocktailSearchResult(drink) {
+    let mainDiv = document.createElement('a');
+    mainDiv.href = '/cocktails/' + drink.name;
+    mainDiv.className = 'search-result-wrapper';
+    mainDiv.setAttribute('data-drink', JSON.stringify(drink));
+    let resultThumb = document.createElement('img');
+    resultThumb.src = drink.thumbnail + '/preview';
+    resultThumb.className = 'search-result-thumbnail';
+    let resultName = document.createElement('h2');
+    resultName.innerHTML = drink.name;
+    resultName.className = 'search-result-name';
+    let resultDrinkType = document.createElement('p');
+    resultDrinkType.innerHTML = drink.drinkType;
+    resultDrinkType.className = 'search-result-drink-type';
+    let resultCupType = document.createElement('p');
+    resultCupType.innerHTML = drink.cupType;
+    resultCupType.className = 'search-result-cup-type';
+    let resultAlcoholic = document.createElement('p');
+    resultAlcoholic.innerHTML = drink.alcoholic;
+    resultAlcoholic.className = 'search-result-alcoholic';
+    let descriptorContainer = document.createElement('div');
+    descriptorContainer.className = 'descriptor-container';
+    descriptorContainer.appendChild(resultDrinkType);
+    descriptorContainer.appendChild(resultCupType);
+    descriptorContainer.appendChild(resultAlcoholic);
+    mainDiv.appendChild(resultThumb);
+    mainDiv.appendChild(resultName);
+    mainDiv.append(descriptorContainer);
+    // mainDiv.appendChild(resultDrinkType);
+    // mainDiv.appendChild(resultCupType);
+    // mainDiv.appendChild(resultAlcoholic);
+    searchResults.appendChild(mainDiv);
+    mainDiv.addEventListener('mouseover', () => {
+        //console.log(mainDiv.getAttribute('data-drink'));
+        updatePreview(JSON.parse(mainDiv.getAttribute('data-drink')));
+    })
+}
+
+function makeIngredientSearchResult(ingredient) {
+    let mainA = document.createElement('a');
+    mainA.className = 'search-result-wrapper';
+    mainA.href = '/ingredients/' + ingredient.name;
+    mainA.setAttribute('data-ingredient', JSON.stringify(ingredient));
+    let thumb = document.createElement('img');
+    thumb.className = 'search-result-thumbnail';
+    thumb.src = ingredientThumb + ingredient.name.toLowerCase() + '-Medium.png';
+    let ingredientName = document.createElement('h2');
+    ingredientName.className = 'search-result-name';
+    ingredientName.innerHTML = ingredient.name;
+    let alcoholType = document.createElement('p');
+    alcoholType.className = 'search-result-drink-type';
+    let descContainer = document.createElement('div');
+    descContainer.className = 'descriptor-container';
+    mainA.appendChild(thumb);
+    mainA.appendChild(ingredientName);
+
+    descContainer.appendChild(alcoholType);
+    if(ingredient.alcohol) {
+        alcoholType.innerHTML = 'Alcoholic';
+        let ABV = document.createElement('p');
+        ABV.className = 'search-result-cup-type';
+        if(ingredient.abv !== null) {
+            ABV.innerHTML = ingredient.abv + "%";
+        } else {
+            ABV.innerHTML = "ABV varies";
+        }
+        descContainer.appendChild(ABV);
+    } else {
+        alcoholType.innerHTML = 'Non-alcoholic';
+    }
+    mainA.appendChild(descContainer);
+    searchResults.appendChild(mainA);
+    mainA.addEventListener('mouseover', () => {
+        updatePreviewI(JSON.parse(mainA.getAttribute('data-ingredient')));
+    })
 }

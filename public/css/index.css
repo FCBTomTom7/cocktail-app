@@ -2,7 +2,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Roboto Mono', monospace;
 }
 
 p {
@@ -107,6 +107,10 @@ h2 {
     border-radius: 2px;
 }
 
+#random-button:hover {
+    background: #090b09;
+}
+
 #filters {
     height: 33%;
     border-bottom: 1px solid black;
@@ -142,6 +146,10 @@ h2 {
 .input-label {
     display: block;
     margin-bottom: 2%;
+}
+
+input[type="checkbox"] {
+    margin-right: 5%;
 }
 
 select {
@@ -255,3 +263,4 @@ input, button, select {
     height: 50%;
     padding: 5px;
 }
+

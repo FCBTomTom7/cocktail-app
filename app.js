@@ -61,7 +61,6 @@ app.post('/api', async (req, res) => {
             }
         }
     } else {
-        console.log('IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII');
         searchResponse = await fetch(apiUrl + "search.php?i=" + packet.search);
         filteredResults = await searchResponse.json();
         if(filteredResults.ingredients !== null) {
@@ -83,6 +82,29 @@ app.post('/api', async (req, res) => {
 
 app.get('/cocktails/:cocktail', async (req, res) => {
     res.sendFile(process.cwd() + '/views/cocktail.html');
+})
+
+app.get('/api/random', async (req, res) => {
+    let response = await fetch(apiUrl + '/random.php');
+    let data = await response.json();
+    let drink = data.drinks[0];
+    let ingredients = [];
+    let measurements = [];
+    for(let i = 0; i < 15; i++) {
+        if(drink['strIngredient' + (i + 1)] == null || drink['strIngredient' + (i + 1)] === '') break;
+        ingredients.push(drink['strIngredient' + (i + 1)]);
+        measurements.push(drink['strMeasure' + (i + 1)]);
+    }
+    res.json({
+        name: drink.strDrink,
+        drinkType: drink.strCategory,
+        cupType: drink.strGlass,
+        instructions: drink.strInstructions,
+        thumbnail: drink.strDrinkThumb,
+        ingredients,
+        measurements,
+        alcoholic: drink.strAlcoholic
+    });
 })
 
 app.get('/api/:cocktail', async (req, res) => {
@@ -136,6 +158,8 @@ app.get('/api/i/:ingredient', async (req, res) => {
         })
     }
 })
+
+
 
 http.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
