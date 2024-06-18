@@ -84,27 +84,44 @@ app.get('/cocktails/:cocktail', async (req, res) => {
     res.sendFile(process.cwd() + '/views/cocktail.html');
 })
 
-app.get('/api/random', async (req, res) => {
-    let response = await fetch(apiUrl + '/random.php');
-    let data = await response.json();
-    let drink = data.drinks[0];
-    let ingredients = [];
-    let measurements = [];
-    for(let i = 0; i < 15; i++) {
-        if(drink['strIngredient' + (i + 1)] == null || drink['strIngredient' + (i + 1)] === '') break;
-        ingredients.push(drink['strIngredient' + (i + 1)]);
-        measurements.push(drink['strMeasure' + (i + 1)]);
+app.post('/api/random', async (req, res) => {
+    let packet = req.body;
+    if(packet.type === "cocktail") {
+        let response = await fetch(apiUrl + 'random.php');
+        let data = await response.json();
+        let drink = data.drinks[0];
+        let ingredients = [];
+        let measurements = [];
+        for(let i = 0; i < 15; i++) {
+            if(drink['strIngredient' + (i + 1)] == null || drink['strIngredient' + (i + 1)] === '') break;
+            ingredients.push(drink['strIngredient' + (i + 1)]);
+            measurements.push(drink['strMeasure' + (i + 1)]);
+        }
+        res.json({
+            name: drink.strDrink,
+            drinkType: drink.strCategory,
+            cupType: drink.strGlass,
+            instructions: drink.strInstructions,
+            thumbnail: drink.strDrinkThumb,
+            ingredients,
+            measurements,
+            alcoholic: drink.strAlcoholic
+        });
+    } else {
+        let response = await fetch(apiUrl + 'list.php?i=list');
+        let data = await response.json();
+        let randomNumber = Math.floor(Math.random() * data.drinks.length); // literally why is this labeled drinks???????
+        let ingredientName = data.drinks[randomNumber].strIngredient1;
+        response = await fetch(apiUrl + 'search.php?i=' + ingredientName);
+        data = await response.json();
+        let ingredient = data.ingredients[0];
+        res.json({
+            name: ingredient.strIngredient,
+            description: ingredient.strDescription,
+            alcohol: ingredient.strAlcohol === "Yes",
+            abv: ingredient.strABV
+        })
     }
-    res.json({
-        name: drink.strDrink,
-        drinkType: drink.strCategory,
-        cupType: drink.strGlass,
-        instructions: drink.strInstructions,
-        thumbnail: drink.strDrinkThumb,
-        ingredients,
-        measurements,
-        alcoholic: drink.strAlcoholic
-    });
 })
 
 app.get('/api/:cocktail', async (req, res) => {

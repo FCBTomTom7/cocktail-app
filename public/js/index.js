@@ -125,7 +125,12 @@ function updatePreviewI(ingredient) {
     removeChildElements(previewInstructions);
     previewAlcoholic.innerHTML = ingredient.alcohol ? "Alcoholic" : "Non-alcoholic";
     if(ingredient.alcohol) {
-        previewAbv.innerHTML = ingredient.abv + "%";
+        if(ingredient.abv !== null) {
+            previewAbv.innerHTML = ingredient.abv + "%";
+        } else {
+            previewAbv.innerHTML = "ABV varies";
+        }
+        
     }
     previewDesc.innerHTML = ingredient.description;
 }
@@ -145,9 +150,19 @@ function removeSearchResults() {
 
 async function randomSearch() {
     removeChildElements(searchResults);
-    let response = await fetch(url + '/api/random', {method: "GET"});
-    let drink = await response.json();
-    makeCocktailSearchResult(drink);
+    let response = await fetch(url + '/api/random', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({type: searchType.value})
+    });
+    let data = await response.json();
+    if(data.type === "cocktail") {
+        makeCocktailSearchResult(data);
+    } else {
+        makeIngredientSearchResult(data)
+    }
 }
 
 function getFilterData() {
